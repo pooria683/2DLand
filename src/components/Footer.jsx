@@ -4,7 +4,16 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <p>ساخته شده با ❤️ و React — میزبانی روی Cloudflare Pages</p>
+        <p>
+          ساخته شده توسط{' '}
+          <a
+            href="https://about.dastanjoo.ir"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            پوریا بهرامی
+          </a>
+        </p>
       </div>
     </footer>
   )

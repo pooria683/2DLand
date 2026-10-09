@@ -1,0 +1,49 @@
+.game-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.card-art {
+  height: 130px;
+  display: grid;
+  place-items: center;
+  font-size: 3.2rem;
+  background: var(--card-gradient, var(--accent));
+}
+
+.card-info {
+  padding: 0.9rem 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.card-info h3 { font-size: 1.05rem; }
+
+.card-info p {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.card-category {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  color: var(--text-dim);
+}

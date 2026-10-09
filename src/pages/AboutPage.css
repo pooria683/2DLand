@@ -1,0 +1,2 @@
+.about { max-width: 700px; line-height: 2; color: var(--text-dim); }
+.about h1 { color: var(--text); margin-bottom: 1rem; }

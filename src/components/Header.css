@@ -1,0 +1,35 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 13, 23, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.logo { font-weight: 900; font-size: 1.25rem; }
+
+.nav { display: flex; gap: 1.25rem; }
+
+.nav-link {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  padding: 0.3rem 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s;
+}
+
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--accent-2); border-color: var(--accent-2); }
+
+@media (max-width: 480px) {
+  .nav { gap: 0.8rem; }
+  .logo { font-size: 1.05rem; }
+}

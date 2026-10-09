@@ -36,12 +36,25 @@
   overflow: hidden;
 }
 
+/* 🆕 بازی تقریباً تمام ارتفاع صفحه را می‌گیرد */
 .game-frame iframe {
   width: 100%;
-  height: min(70vh, 640px);
-  min-height: 420px;
+  height: calc(100vh - 170px);
+  min-height: 480px;
   border: 0;
   display: block;
+}
+
+/* 🆕 در حالت تمام‌صفحه، بازی کل نمایشگر را می‌گیرد */
+.game-frame:fullscreen {
+  border: none;
+  border-radius: 0;
+}
+
+.game-frame:fullscreen iframe,
+.game-frame:-webkit-full-screen iframe {
+  width: 100vw;
+  height: 100vh;
 }
 
 .not-found { text-align: center; padding: 4rem 0; }

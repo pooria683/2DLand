@@ -8,6 +8,7 @@
 }
 
 .header-inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,7 +17,14 @@
 
 .logo { font-weight: 900; font-size: 1.25rem; }
 
-.nav { display: flex; gap: 1.25rem; }
+/* 🆕 منو دقیقاً وسط هدر */
+.nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.5rem;
+}
 
 .nav-link {
   color: var(--text-dim);
@@ -30,6 +38,6 @@
 .nav-link.active { color: var(--accent-2); border-color: var(--accent-2); }
 
 @media (max-width: 480px) {
-  .nav { gap: 0.8rem; }
+  .nav { position: static; transform: none; gap: 0.8rem; }
   .logo { font-size: 1.05rem; }
 }

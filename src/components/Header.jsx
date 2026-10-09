@@ -11,7 +11,6 @@ export default function Header() {
         <nav className="nav">
           <NavLink to="/" end className={cls}>خانه</NavLink>
           <NavLink to="/games" className={cls}>بازی‌ها</NavLink>
-          <NavLink to="/about" className={cls}>درباره</NavLink>
         </nav>
       </div>
     </header>

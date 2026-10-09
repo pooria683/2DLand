@@ -5,3 +5,16 @@
   font-size: 0.85rem;
   text-align: center;
 }
+
+.site-footer a {
+  color: var(--accent-2);
+  font-weight: 800;
+  border-bottom: 1px dashed rgba(0, 209, 199, 0.5);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.site-footer a:hover {
+  color: #fff;
+  border-color: #fff;
+}

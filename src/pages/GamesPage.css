@@ -1,48 +1,69 @@
-.filter-bar {
+.game-toolbar {
   display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
-.search-input {
-  width: 100%;
-  max-width: 420px;
+.game-toolbar h1 { font-size: 1.4rem; }
+
+.back-link {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--accent-2); }
+
+.fullscreen-btn {
   background: var(--card);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 0.65rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 999px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  outline: none;
+  font-size: 0.85rem;
   transition: border-color 0.2s;
 }
 
-.search-input:focus { border-color: var(--accent); }
+.fullscreen-btn:hover { border-color: var(--accent); }
 
-.chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-
-.chip {
-  background: var(--card);
+.game-frame {
+  background: #000;
   border: 1px solid var(--border);
-  color: var(--text-dim);
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  transition: all 0.2s;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
-.chip:hover { border-color: var(--accent); color: var(--text); }
-
-.chip.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+/* قاب دقیقاً ۱۶:۹ — همون نسبتی که بازی ساخته شده،
+   تا خودِ بازی بزرگ‌ترین سایزِ ممکن رو بگیره و هیچ لبه‌ی خالی نباشه */
+.game-frame iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 85vh;
+  margin: 0 auto;
+  border: 0;
 }
 
-.empty {
-  color: var(--text-dim);
-  text-align: center;
-  padding: 2.5rem 0;
+/* حالت تمام‌صفحه: کل نمایشگر */
+.game-frame:fullscreen {
+  border: none;
+  border-radius: 0;
+  background: #000;
 }
+
+.game-frame:fullscreen iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.game-frame:-webkit-full-screen iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.not-found { text-align: center; padding: 4rem 0; }
+.not-found h1 { margin-bottom: 1rem; }

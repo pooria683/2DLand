@@ -32,7 +32,9 @@ export default function GamePage() {
 
   const goFullscreen = () => {
     const el = frameRef.current
-    if (el && el.requestFullscreen) el.requestFullscreen()
+    if (!el) return
+    if (el.requestFullscreen) el.requestFullscreen()
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
   }
 
   return (

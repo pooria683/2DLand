@@ -36,25 +36,33 @@
   overflow: hidden;
 }
 
-/* 🆕 بازی تقریباً تمام ارتفاع صفحه را می‌گیرد */
+/* بازی دقیقاً ۱۶:۹ — بدون نوار سیاه اضافه، تقریباً تمام ارتفاع صفحه */
 .game-frame iframe {
-  width: 100%;
-  height: calc(100vh - 170px);
-  min-height: 480px;
-  border: 0;
   display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 82vh;
+  border: 0;
 }
 
-/* 🆕 در حالت تمام‌صفحه، بازی کل نمایشگر را می‌گیرد */
+/* حالت تمام‌صفحه: بازی کل نمایشگر */
 .game-frame:fullscreen {
   border: none;
   border-radius: 0;
+  background: #000;
 }
 
-.game-frame:fullscreen iframe,
+.game-frame:fullscreen iframe {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: none;
+}
+
 .game-frame:-webkit-full-screen iframe {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .not-found { text-align: center; padding: 4rem 0; }

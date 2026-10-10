@@ -23,6 +23,10 @@ export default function GamePage() {
     )
   }
 
+  // 🆕 سایز بازی رو از شناسنامه‌ش می‌خونیم (پیش‌فرض ۱۶:۹)
+  const [rw, rh] = game.ratio || [16, 9]
+  const frameStyle = { '--rw': rw, '--rh': rh }
+
   const sameCategory = games.filter(
     (g) => g.id !== game.id && g.category === game.category
   )
@@ -51,6 +55,7 @@ export default function GamePage() {
         <iframe
           src={game.file}
           title={game.title}
+          style={frameStyle}
           allow="fullscreen; autoplay"
           allowFullScreen
         />

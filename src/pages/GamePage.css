@@ -36,17 +36,20 @@
   overflow: hidden;
 }
 
-/* بازی دقیقاً ۱۶:۹ — بدون نوار سیاه اضافه، تقریباً تمام ارتفاع صفحه */
+/* 🆕 قاب بر اساس سایز خودِ بازی ساخته می‌شود:
+   عرض = کوچک‌ترینِ (تمام عرض صفحه) و (۸۵٪ ارتفاع × نسبت بازی)
+   ارتفاع خودکار از نسبت درمی‌آید ⇒ هیچ لبه‌ی خالی، هیچ کشیدگی */
 .game-frame iframe {
   display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  width: min(100%, calc(85vh * var(--rw, 16) / var(--rh, 9)));
+  aspect-ratio: var(--rw, 16) / var(--rh, 9);
   height: auto;
-  max-height: 82vh;
   border: 0;
+  background: #000;
 }
 
-/* حالت تمام‌صفحه: بازی کل نمایشگر */
+/* حالت تمام‌صفحه: کل نمایشگر (بازی خودش داخلش جا می‌شود) */
 .game-frame:fullscreen {
   border: none;
   border-radius: 0;
@@ -56,8 +59,6 @@
 .game-frame:fullscreen iframe {
   width: 100%;
   height: 100%;
-  aspect-ratio: auto;
-  max-height: none;
 }
 
 .game-frame:-webkit-full-screen iframe {

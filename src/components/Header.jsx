@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import AuthModal from './AuthModal.jsx'
+import { initialSync, startAutoSync, stopAutoSync, pushSaves, isSynced } from '../lib/saveSync.js'
 import './Header.css'
 
 export default function Header() {
@@ -11,13 +12,28 @@ export default function Header() {
   useEffect(() => {
     fetch('/api/me')
       .then((r) => r.json())
-      .then((d) => { if (d.ok) setUser(d.email) })
+      .then(async (d) => {
+        if (d.ok) {
+          setUser(d)
+          if (!isSynced()) await initialSync()
+          startAutoSync()
+        }
+      })
       .catch(() => {})
   }, [])
 
+  const handleLoggedIn = async (profile) => {
+    setUser(profile)
+    await initialSync()
+    startAutoSync()
+    window.location.reload() // تا بازی با سیو اکانت از نو لود شود
+  }
+
   const logout = async () => {
+    try { await pushSaves(true) } catch {}   // آخرین سیو این دستگاه را بفرست
     await fetch('/api/logout', { method: 'POST' }).catch(() => {})
-    setUser(null)
+    stopAutoSync()
+    window.location.reload()
   }
 
   return (
@@ -31,16 +47,18 @@ export default function Header() {
           </nav>
           {user ? (
             <div className="user-chip">
-              <span className="user-email" dir="ltr" title={user}>{user}</span>
+              <span className="user-name">
+                👤 {user.firstName} {user.lastName}
+              </span>
               <button className="logout-btn" onClick={logout}>خروج</button>
             </div>
           ) : (
-            <button className="login-btn" onClick={() => setShowAuth(true)}>ورود</button>
+            <button className="login-btn" onClick={() => setShowAuth(true)}>ورود / ثبت‌نام</button>
           )}
         </div>
       </header>
       {showAuth && (
-        <AuthModal onClose={() => setShowAuth(false)} onLoggedIn={(email) => setUser(email)} />
+        <AuthModal onClose={() => setShowAuth(false)} onLoggedIn={handleLoggedIn} />
       )}
     </>
   )

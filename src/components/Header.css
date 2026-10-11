@@ -36,7 +36,6 @@
 .nav-link:hover { color: var(--text); }
 .nav-link.active { color: var(--accent-2); border-color: var(--accent-2); }
 
-/* 🆕 دکمه‌ی ورود و چیپ کاربر */
 .login-btn {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: #fff;
@@ -54,16 +53,13 @@
   box-shadow: 0 6px 16px rgba(124, 92, 255, 0.35);
 }
 
-.user-chip {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
+.user-chip { display: flex; align-items: center; gap: 0.6rem; }
 
-.user-email {
+.user-name {
   color: var(--accent-2);
-  font-size: 0.8rem;
-  max-width: 150px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -85,5 +81,5 @@
 @media (max-width: 480px) {
   .nav { position: static; transform: none; gap: 0.8rem; }
   .logo { font-size: 1.05rem; }
-  .user-email { max-width: 90px; }
+  .user-name { max-width: 90px; }
 }

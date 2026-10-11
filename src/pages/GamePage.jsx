@@ -11,6 +11,12 @@ export default function GamePage() {
 
   useEffect(() => {
     if (game) saveRecent(game.id)
+    // 🆕 سیو در حافظه‌ی مرورگر — بدون دست زدن به فایل بازی!
+    // چون بازی و سایت هم‌دامنه‌اند، localStorage مشترک است.
+    // بازی خودش کلید «نام-بازی_filesave» را می‌خواند و فایل نمی‌سازد.
+    if (game && game.saveFile === false) {
+      try { localStorage.setItem(game.id + '_filesave', 'false') } catch (e) {}
+    }
     window.scrollTo(0, 0)
   }, [game])
 
@@ -23,7 +29,7 @@ export default function GamePage() {
     )
   }
 
-  // 🆕 سایز بازی رو از شناسنامه‌ش می‌خونیم (پیش‌فرض ۱۶:۹)
+  // 🆕 سایز بازی از شناسنامه‌ش خوانده می‌شود (پیش‌فرض ۱۶:۹)
   const [rw, rh] = game.ratio || [16, 9]
   const frameStyle = { '--rw': rw, '--rh': rh }
 

@@ -17,7 +17,6 @@
 
 .logo { font-weight: 900; font-size: 1.25rem; }
 
-/* 🆕 منو دقیقاً وسط هدر */
 .nav {
   position: absolute;
   left: 50%;
@@ -37,7 +36,54 @@
 .nav-link:hover { color: var(--text); }
 .nav-link.active { color: var(--accent-2); border-color: var(--accent-2); }
 
+/* 🆕 دکمه‌ی ورود و چیپ کاربر */
+.login-btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: none;
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(124, 92, 255, 0.35);
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.user-email {
+  color: var(--accent-2);
+  font-size: 0.8rem;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.logout-btn:hover { border-color: #ff8a8a; color: #ff8a8a; }
+
 @media (max-width: 480px) {
   .nav { position: static; transform: none; gap: 0.8rem; }
   .logo { font-size: 1.05rem; }
+  .user-email { max-width: 90px; }
 }

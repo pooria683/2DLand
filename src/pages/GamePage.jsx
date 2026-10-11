@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { games, saveRecent } from '../data/games.js'
+import { initialSync, isSynced } from '../lib/saveSync.js'
 import GameCard from '../components/GameCard.jsx'
 import './GamePage.css'
 
@@ -8,17 +9,47 @@ export default function GamePage() {
   const { gameId } = useParams()
   const game = games.find((g) => g.id === gameId)
   const frameRef = useRef(null)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     if (game) saveRecent(game.id)
-    // 🆕 سیو در حافظه‌ی مرورگر — بدون دست زدن به فایل بازی!
-    // چون بازی و سایت هم‌دامنه‌اند، localStorage مشترک است.
-    // بازی خودش کلید «نام-بازی_filesave» را می‌خواند و فایل نمی‌سازد.
     if (game && game.saveFile === false) {
       try { localStorage.setItem(game.id + '_filesave', 'false') } catch (e) {}
     }
     window.scrollTo(0, 0)
   }, [game])
+
+  /* قبل از لود بازی: اگر وارد شده‌ای، سیو اکانت را بیاور
+     تا iframe با داده‌ی درست بالا بیاید */
+  useEffect(() => {
+    let alive = true
+    ;(async () => {
+      try {
+        const r = await fetch('/api/me')
+        const d = await r.json()
+        if (d.ok && !isSynced()) await initialSync()
+      } catch {}
+      if (alive) setReady(true)
+    })()
+    return () => { alive = false }
+  }, [])
+
+  /* بعد از تمام‌صفحه، فوکوس را به بازی برگردان تا کیبورد فوراً کار کند */
+  useEffect(() => {
+    const focusGame = () => {
+      const iframe = frameRef.current?.querySelector('iframe')
+      if (!iframe) return
+      setTimeout(() => {
+        try { iframe.contentWindow?.focus() } catch (e) {}
+      }, 120)
+    }
+    document.addEventListener('fullscreenchange', focusGame)
+    document.addEventListener('webkitfullscreenchange', focusGame)
+    return () => {
+      document.removeEventListener('fullscreenchange', focusGame)
+      document.removeEventListener('webkitfullscreenchange', focusGame)
+    }
+  }, [])
 
   if (!game) {
     return (
@@ -29,7 +60,6 @@ export default function GamePage() {
     )
   }
 
-  // 🆕 سایز بازی از شناسنامه‌ش خوانده می‌شود (پیش‌فرض ۱۶:۹)
   const [rw, rh] = game.ratio || [16, 9]
   const frameStyle = { '--rw': rw, '--rh': rh }
 
@@ -43,8 +73,19 @@ export default function GamePage() {
   const goFullscreen = () => {
     const el = frameRef.current
     if (!el) return
-    if (el.requestFullscreen) el.requestFullscreen()
-    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen()
+    const iframe = el.querySelector('iframe')
+    try {
+      if (document.fullscreenElement) {
+        document.exitFullscreen()
+      } else if (el.requestFullscreen) {
+        el.requestFullscreen()
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen()
+      }
+    } catch (e) {}
+    setTimeout(() => {
+      try { iframe?.contentWindow?.focus() } catch (e) {}
+    }, 200)
   }
 
   return (
@@ -58,13 +99,17 @@ export default function GamePage() {
       </div>
 
       <div className="game-frame" ref={frameRef}>
-        <iframe
-          src={game.file}
-          title={game.title}
-          style={frameStyle}
-          allow="fullscreen; autoplay"
-          allowFullScreen
-        />
+        {!ready ? (
+          <div className="sync-loading">💾 در حال همگام‌سازی سیو با اکانت...</div>
+        ) : (
+          <iframe
+            src={game.file}
+            title={game.title}
+            style={frameStyle}
+            allow="fullscreen; autoplay"
+            allowFullScreen
+          />
+        )}
       </div>
 
       {related.length > 0 && (
